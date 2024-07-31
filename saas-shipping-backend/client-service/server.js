@@ -1,20 +1,33 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import cors
 const clientRoutes = require('./routes/clientRoutes');
-const { sequelize } = require('./config/database');
+const sequelize = require('./config/database');
 
 const app = express();
 const port = 3004;
 
+// Middleware
 app.use(bodyParser.json());
-app.use(cors()); // Use cors
+
+// Test the database connection
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connected...');
+  })
+  .catch(err => {
+    console.error('Error: ', err);
+  });
+
+// Sync the database
+sequelize.sync()
+  .then(() => {
+    console.log('Database synchronized...');
+  });
 
 // Routes
-app.use('/clients', clientRoutes);
+app.use('/api/clients', clientRoutes);
 
-sequelize.sync().then(() => {
-  app.listen(port, () => {
-    console.log(`Client service running on port ${port}`);
-  });
-}).catch(err => console.log('Error: ' + err));
+// Start the server
+app.listen(port, () => {
+  console.log(`Client service running on port ${port}`);
+});

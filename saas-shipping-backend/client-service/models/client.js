@@ -1,14 +1,18 @@
-// client-service/models/client.js
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // This is where your Sequelize instance should be initialized
+const sequelize = require('../config/database');
 
 const Client = sequelize.define('Client', {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
 }, {
-    timestamps: true
+    timestamps: true,
 });
 
 module.exports = Client;

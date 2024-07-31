@@ -1,6 +1,5 @@
-// user-service/models/user.js
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Ensure the path is correct
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
 const User = sequelize.define('User', {
     email: {
@@ -15,9 +14,9 @@ const User = sequelize.define('User', {
     ClientId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-    }
+    },
 }, {
-    timestamps: true
+    timestamps: true,
 });
 
 module.exports = User;

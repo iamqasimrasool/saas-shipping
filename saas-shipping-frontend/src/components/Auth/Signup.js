@@ -1,32 +1,60 @@
 import React, { useState } from 'react';
 import { signup } from '../../services/api';
 
-function Signup({ setIsAuthenticated }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [clientId, setClientId] = useState('');
+const Signup = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [clientId, setClientId] = useState('');
+  const [message, setMessage] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await signup(email, password, clientId);
-            setIsAuthenticated(true);
-        } catch (error) {
-            console.error('Signup failed:', error);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signup(email, password, clientId);
+      setMessage('Signup successful');
+    } catch (error) {
+      setMessage('Signup failed');
+    }
+  };
 
-    return (
-        <div>
-            <h2>Signup</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-                <input type="text" value={clientId} onChange={(e) => setClientId(e.target.value)} placeholder="Client ID" required />
-                <button type="submit">Signup</button>
-            </form>
+  return (
+    <div className="container mt-5">
+      <h2>Signup</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
-    );
-}
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label>Client ID</label>
+          <input
+            type="text"
+            className="form-control"
+            value={clientId}
+            onChange={(e) => setClientId(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Signup
+        </button>
+        {message && <p className="mt-3">{message}</p>}
+      </form>
+    </div>
+  );
+};
 
 export default Signup;

@@ -5,4 +5,4 @@ const sequelize = new Sequelize('saas_auth', 'auth_user', 'Qasim@123', {
   dialect: 'postgres',
 });
 
-module.exports = { sequelize };
+module.exports = sequelize;
